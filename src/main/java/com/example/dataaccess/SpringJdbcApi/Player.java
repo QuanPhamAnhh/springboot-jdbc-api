@@ -1,4 +1,4 @@
-package com.example.springbootjdbcapi;
+package com.example.dataaccess.SpringJdbcApi;
 
 import java.util.Date;
 

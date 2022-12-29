@@ -1,4 +1,4 @@
-package com.example.springbootjdbcapi;
+package com.example.dataaccess.SpringJdbcApi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class PlayerDAO {
     @Autowired
-    static
+
     JdbcTemplate jdbcTemplate;
 
     public List<Player> getAllPlayers() {
