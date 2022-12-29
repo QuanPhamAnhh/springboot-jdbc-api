@@ -22,6 +22,8 @@ public class SpringbootJdbcApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		touranment.createTournamentTable();
 
+		logger.info("French Players: {}", playerDao.getPlayerByNationality("France"));
+
 		logger.info("Inserting Player 4: {}", playerDao.insertPlayer(
 				new Player (4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
 		);
@@ -35,6 +37,8 @@ public class SpringbootJdbcApiApplication implements CommandLineRunner {
 		logger.info("All Players Data: {}", playerDao.getAllPlayers());
 
 		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
+
+
 	}
 	public static void main(String[] args) {
 

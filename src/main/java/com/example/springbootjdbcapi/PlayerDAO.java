@@ -3,14 +3,18 @@ package com.example.springbootjdbcapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
 public class PlayerDAO {
     @Autowired
+    static
     JdbcTemplate jdbcTemplate;
 
     public List<Player> getAllPlayers() {
@@ -45,6 +49,24 @@ public class PlayerDAO {
     public int deletePlayerById(int id) {
         String sql="DELETE FROM PLAYER WHERE ID = ?";
         return jdbcTemplate.update(sql, new Object[] {id});
+    }
+    public List<Player> getPlayerByNationality(String nationality) {
+        String sql = "SELECT * FROM PLAYER WHERE NATIONALITY = ?";
+        return jdbcTemplate.query(sql, new PlayerMapper(), new Object[] {nationality});
+    }
+    private static final class PlayerMapper implements RowMapper<Player> {
+
+        @Override
+        public Player mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            Player player = new Player();
+            player.setId(resultSet.getInt("id"));
+            player.setName(resultSet.getString("name"));
+            player.setNationality(resultSet.getString("nationality"));
+//            player.setBirthDate(resultSet.getTime("birth_date"));
+            player.setTitles(resultSet.getInt("titles"));
+            return player;
+        }
+
     }
 
 }
