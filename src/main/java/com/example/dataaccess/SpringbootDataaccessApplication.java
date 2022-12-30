@@ -1,5 +1,7 @@
 package com.example.dataaccess;
 
+import com.example.dataaccess.SpringDataJPA.PlayerEntity;
+import com.example.dataaccess.SpringDataJPA.PlayerRepository;
 import com.example.dataaccess.SpringJdbcApi.Player;
 import com.example.dataaccess.SpringJdbcApi.PlayerDAO;
 import com.example.dataaccess.SpringJdbcApi.TournamentDAO;
@@ -21,14 +23,47 @@ public class SpringbootDataaccessApplication implements CommandLineRunner {
 
 	@Autowired
 	TournamentDAO touranment;
-	@Override
-	public void run(String... args) throws Exception {
-		touranment.createTournamentTable();
+	@Autowired
+	PlayerRepository playerRepository;
 
+
+	public void run(String... args) throws Exception {
+		SpringDataJPA();
+		SpringJdbcApi();
+
+
+	}
+
+	private void SpringDataJPA() {
+		// ex1
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Djokovic", "Serbia", Date.valueOf("1987-05-22"), 81)));
+
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Monfils", "France", Date.valueOf("1986-09-01"), 10)));
+
+		// ex2
+		logger.info("\n\n>> Player with id 2: {}\n", playerRepository.getPlayerById(2));
+
+		// ex3
+		logger.info("\n\n>> Inserting Player: {}\n", playerRepository.insertPlayer(
+				new PlayerEntity("Thiem", "Austria",
+						new Date(System.currentTimeMillis()), 17)));
+		logger.info("\n\n>> Updating Player with Id 3: {}\n", playerRepository.updatePlayer(
+				new PlayerEntity(3, "Thiem", "Austria", Date.valueOf("1993-09-03"), 17)));
+		logger.info("\n\n>> Player with id 3: {}\n", playerRepository.getPlayerById(3));
+
+		//delete player
+		playerRepository.deleteById(2);
+	}
+
+	private void SpringJdbcApi() {
+		touranment.createTournamentTable();
 		logger.info("French Players: {}", playerDao.getPlayerByNationality("France"));
 
+
 		logger.info("Inserting Player 4: {}", playerDao.insertPlayer(
-				new Player(4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
+				new Player (4, "Thiem", "Austria", new Date(System.currentTimeMillis()), 17 ))
 		);
 
 		logger.info("Updating Player with Id 4: {}", playerDao.updatePlayer(
@@ -41,8 +76,9 @@ public class SpringbootDataaccessApplication implements CommandLineRunner {
 
 		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
 
-
 	}
+
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(SpringbootDataaccessApplication.class, args);
