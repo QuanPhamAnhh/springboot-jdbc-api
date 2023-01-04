@@ -53,6 +53,8 @@ public class SpringbootDataaccessApplication implements CommandLineRunner {
 				new PlayerEntity(3, "Thiem", "Austria", Date.valueOf("1993-09-03"), 17)));
 		logger.info("\n\n>> Player with id 3: {}\n", playerRepository.getPlayerById(3));
 
+		logger.info("\n\n>> All Players Data: {}", playerRepository.getAllPlayers());
+
 		//delete player
 		playerRepository.deleteById(2);
 	}

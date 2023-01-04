@@ -1,13 +1,12 @@
 package com.example.dataaccess.SpringDataJPA;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name="PlayerTable")
+@NamedQuery(name="get_all_players", query="select p from PlayerEntity p")
 public class PlayerEntity {
     @Id
     @GeneratedValue
@@ -84,4 +83,5 @@ public class PlayerEntity {
         return "\nPlayer [id= " + id + ", name= " + name + ", nationality= " + nationality + ", birthDate= " + birthDate
                 + ", titles= " + titles + "]";
     }
+
 }
