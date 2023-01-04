@@ -2,6 +2,7 @@ package com.example.dataaccess;
 
 import com.example.dataaccess.SpringDataJPA.PlayerEntity;
 import com.example.dataaccess.SpringDataJPA.PlayerRepository;
+import com.example.dataaccess.SpringDataJPA.SpringDataJPAPlayerRepository;
 import com.example.dataaccess.SpringJdbcApi.Player;
 import com.example.dataaccess.SpringJdbcApi.PlayerDAO;
 import com.example.dataaccess.SpringJdbcApi.TournamentDAO;
@@ -25,6 +26,8 @@ public class SpringbootDataaccessApplication implements CommandLineRunner {
 	TournamentDAO touranment;
 	@Autowired
 	PlayerRepository playerRepository;
+	@Autowired
+	SpringDataJPAPlayerRepository springDataJPAPlayerRepository;
 
 
 	public void run(String... args) throws Exception {
@@ -78,6 +81,25 @@ public class SpringbootDataaccessApplication implements CommandLineRunner {
 
 		logger.info("Player with Id 3: {}", playerDao.getPlayerById(3));
 
+	}
+	private void SpringDataRepositoryEx() {
+		//Inserting rows
+		logger.info("Inserting Player: {}", springDataJPAPlayerRepository.save(new PlayerEntity("Djokovic", "Serbia",
+				Date.valueOf("1987-05-22"), 81)));
+		logger.info("Inserting Player: {}", springDataJPAPlayerRepository.save(new PlayerEntity("Monfils", "France",
+				Date.valueOf("1986-09-01"), 10)));
+		logger.info("Inserting Player: {}", springDataJPAPlayerRepository.save(new PlayerEntity("Thiem", "Austria",
+				new Date(System.currentTimeMillis()), 17)));
+
+		//Updating row
+		logger.info("Updating Player with Id 3: {}", springDataJPAPlayerRepository.save(new PlayerEntity(3, "Thiem", "Austria",
+				Date.valueOf("1993-09-03"), 17)));
+
+		logger.info("Player with Id 2: {}", springDataJPAPlayerRepository.findById(2));
+
+		logger.info("All Players Data: {}", springDataJPAPlayerRepository.findAll());
+
+		springDataJPAPlayerRepository.deleteById(2);
 	}
 
 
